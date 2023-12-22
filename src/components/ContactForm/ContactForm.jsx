@@ -4,28 +4,38 @@ import {
   StyledInput,
   StyledLabel,
 } from './ContactForm.styled.js';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'store/contactsSlice.js';
 
 export const ContactForm = ({ addContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contactsList.contacts);
 
   const handleInputName = e => {
     setName(e.target.value);
+    if (contacts.some(contact => contact.name === name)) {
+      alert(`Such contact is already exists!`);
+      return name;
+    }
   };
-
   const handleInputNumber = e => {
     setNumber(e.target.value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
+
     const newContact = { name, number, id: nanoid() };
-    addContact(newContact);
+
+    dispatch(addContact(newContact));
     setName('');
     setNumber('');
   };
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledLabel>
