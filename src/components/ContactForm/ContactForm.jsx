@@ -17,10 +17,6 @@ export const ContactForm = () => {
 
   const handleInputName = e => {
     setName(e.target.value);
-    if (contacts.some(contact => contact.name === name)) {
-      alert(`Such contact is already exists!`);
-      return;
-    }
   };
   const handleInputNumber = e => {
     setNumber(e.target.value);
@@ -28,6 +24,10 @@ export const ContactForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (contacts.some(contact => contact.name === name)) {
+      alert(`Such a contact already exists!`);
+      return;
+    }
     dispatch(addContact({ name, number, id: nanoid() }));
     setName('');
     setNumber('');

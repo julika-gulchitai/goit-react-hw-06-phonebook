@@ -7,8 +7,11 @@ import { searchContacts } from 'store/contactsSlice';
 
 export const Filter = () => {
   const dispatch = useDispatch();
+
   const handleInputChange = e => {
-    dispatch(searchContacts(e.target.value));
+    const inputSearch = searchContacts(e.target.value);
+
+    dispatch(inputSearch);
   };
   return (
     <>
