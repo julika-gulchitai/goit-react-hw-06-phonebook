@@ -2,16 +2,22 @@ import {
   StyledInput,
   StyledText,
 } from 'components/ContactForm/ContactForm.styled';
+import { useDispatch } from 'react-redux';
+import { searchContacts } from 'store/contactsSlice';
 
-export const Filter = ({ filter, handleInputChange }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const handleInputChange = e => {
+    dispatch(searchContacts(e.target.value));
+  };
   return (
     <>
       <StyledText>Find contact by name </StyledText>
       <StyledInput
         name="filter"
-        value={filter}
+        // value={filter}
         onChange={handleInputChange}
-        placeholder="enter user name"
+        placeholder="Enter name"
       ></StyledInput>
     </>
   );

@@ -9,17 +9,17 @@ import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'store/contactsSlice.js';
 
-export const ContactForm = ({ addContact }) => {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contactsList.contacts);
+  const contacts = useSelector(state => state.contacts.contacts);
 
   const handleInputName = e => {
     setName(e.target.value);
     if (contacts.some(contact => contact.name === name)) {
       alert(`Such contact is already exists!`);
-      return name;
+      return;
     }
   };
   const handleInputNumber = e => {
@@ -28,10 +28,7 @@ export const ContactForm = ({ addContact }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    const newContact = { name, number, id: nanoid() };
-
-    dispatch(addContact(newContact));
+    dispatch(addContact({ name, number, id: nanoid() }));
     setName('');
     setNumber('');
   };
